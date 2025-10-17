@@ -9,74 +9,84 @@
 else
 {
 	<h1>Lisa Film</h1>
-	<div>
-
-		<form method="post" enctype="multipart/form-data">
-			<input asp-for="ID" type="hidden" />	
-			<input asp-for="EntryCreatedAt" type="hidden" />	
-			<input asp-for="EntryModifiedAt" type="hidden" />	
-
-			<div class="form-group row">
-				<label asp-for="Title" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="Title" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="Description" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="Description" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="FirstPublished" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="FirstPublished" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="Director" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="Director" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="CurrentRating" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="CurrentRating" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="Vulgar" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="Vulgar" class="form-control" />
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="Genre" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<select asp-for="Genre" asp-items="Html.GetEnumSelectList<Genre>()">
-						<option value="">-- Vali žanr --</option>
-					</select>
-					<span asp-validation-for="Genre"></span>
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label asp-for="IsOnAdultSwim" class="col-sm-2 col-form-label"></label>
-				<div class="col-sm-10">
-					<input asp-for="IsOnAdultSwim" class="form-control" />
-				</div>
-			</div>
-
-			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create"/>
-
-		</form>
-	</div>
 }
+<div>
+
+	<form method="post" enctype="multipart/form-data">
+		<input asp-for="ID" type="hidden" />	
+		<input asp-for="EntryCreatedAt" type="hidden" />	
+		<input asp-for="EntryModifiedAt" type="hidden" />	
+
+		<div class="form-group row">
+			<label asp-for="Title" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Title" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="Description" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Description" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="FirstPublished" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="FirstPublished" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="Director" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Director" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="CurrentRating" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="CurrentRating" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="Vulgar" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Vulgar" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="Genre" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<select asp-for="Genre" asp-items="Html.GetEnumSelectList<Genre>()">
+					<option value="">-- Vali žanr --</option>
+				</select>
+				<span asp-validation-for="Genre"></span>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="IsOnAdultSwim" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="IsOnAdultSwim" class="form-control" />
+			</div>
+		</div>
+
+		@if(Model.ID.HasValue)
+		{
+			<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Muuda" />
+
+		}
+		else
+		{
+			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create"/>
+		}
+
+		<a asp-action="Index" asp-controller="Movies" type="submit" class="btn btn-sucess" value="Tagasi loendisse"></a>
+
+	</form>
+</div>

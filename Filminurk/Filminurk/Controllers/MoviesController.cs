@@ -3,6 +3,7 @@ using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Controllers
@@ -63,7 +64,7 @@ namespace Filminurk.Controllers
             var result = await _movieServices.Create(dto);
             if (result == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -99,6 +100,35 @@ namespace Filminurk.Controllers
 
             return View("CreateUpdate", vm);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(MoviesCreateUpdateViewModel vm)
+        {
+            var dto = new MoviesDTO()
+            {
+                ID = vm.ID,
+                Title = vm.Title,
+                Description = vm.Description,
+                FirstPublished = vm.FirstPublished,
+                Director = vm.Director,
+                Actors = vm.Actors,
+                CurrentRating = vm.CurrentRating,
+                Vulgar = vm.Vulgar,
+                Genre = vm.Genre,
+                IsOnAdultSwim = vm.IsOnAdultSwim,
+                EntryCreatedAt = vm.EntryCreatedAt,
+                EntryModifiedAt = vm.EntryModifiedAt
+            };
+
+            var result = await _movieServices.Update(dto);
+            
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -139,6 +169,7 @@ namespace Filminurk.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
         
     
     }
