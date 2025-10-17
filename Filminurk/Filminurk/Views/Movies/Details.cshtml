@@ -1,0 +1,76 @@
+﻿@model Filminurk.Models.Movies.MoviesDetailsViewModel
+
+<h1>Filmi info</h1>
+
+<div>
+	<h4>Filmi info</h4>
+	<hr />
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="ID" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.ID)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Title" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Title)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Description" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Description)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="FirstPublished" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.FirstPublished)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Director" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Director)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="CurrentRating" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.CurrentRating)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Vulgar" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Vulgar)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Genre" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Genre)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="IsOnAdultSwim" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.IsOnAdultSwim)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="EntryCreatedAt" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.EntryCreatedAt)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="EntryModifiedAt" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.EntryModifiedAt)
+		</div>
+	</dl>
+	<hr />
+	<a asp-action="Index" asp-controller="Movies" class="btn btn-primary">Tagasi</a>
+</div>
