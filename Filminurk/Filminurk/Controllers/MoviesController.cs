@@ -58,7 +58,16 @@ namespace Filminurk.Controllers
                 Genre = vm.Genre,
                 IsOnAdultSwim = vm.IsOnAdultSwim,
                 EntryCreatedAt = vm.EntryCreatedAt,
-                EntryModifiedAt = vm.EntryModifiedAt
+                EntryModifiedAt = vm.EntryModifiedAt,
+
+                Files = vm.Files,
+                FileToApiDtos = vm.Images
+                .Select(x => new FileToApiDTO
+                {
+                    ImageID = x.ImageID,
+                    FilePath = x.FilePath,
+                    MovieID = x.MovieID
+                }).ToArray()
             };
 
             var result = await _movieServices.Create(dto);
@@ -84,6 +93,15 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageID = id
+                }).ToArrayAsync();
+
+
             var vm = new MoviesCreateUpdateViewModel();
             vm.ID = movie.ID;
             vm.Title = movie.Title;
@@ -97,6 +115,7 @@ namespace Filminurk.Controllers
             vm.IsOnAdultSwim = movie.IsOnAdultSwim;
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
+            vm.Images.AddRange(images);
 
             return View("CreateUpdate", vm);
 
@@ -118,8 +137,17 @@ namespace Filminurk.Controllers
                 Genre = vm.Genre,
                 IsOnAdultSwim = vm.IsOnAdultSwim,
                 EntryCreatedAt = vm.EntryCreatedAt,
-                EntryModifiedAt = vm.EntryModifiedAt
+                EntryModifiedAt = vm.EntryModifiedAt,
+                Files = vm.Files,
+                FileToApiDtos = vm.Images
+                .Select(x => new FileToApiDTO
+                {
+                    MovieID = x.MovieID,
+                    ImageID = x.ImageID,
+                    FilePath = x.FilePath
+                }).ToArray()
             };
+            
 
             var result = await _movieServices.Update(dto);
             
@@ -140,6 +168,14 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
+            
+            var images = await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageID = y.ImageID
+                }).ToArrayAsync();
 
             var vm = new MoviesDeleteViewModel();
             vm.ID = movie.ID;
@@ -154,6 +190,9 @@ namespace Filminurk.Controllers
             vm.IsOnAdultSwim = movie.IsOnAdultSwim;
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
+
+            vm.Images.AddRange(images);
+            
 
             return View(vm);
         }

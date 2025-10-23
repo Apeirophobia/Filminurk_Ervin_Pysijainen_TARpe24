@@ -13,6 +13,11 @@ namespace Filminurk.Models.Movies
         public double? CurrentRating { get; set; }
         // public List<UserComment>? Reviews { get; set; }
 
+        // kaasolevate piltide andmeomadused
+        public List<IFormFile> Files { get; set; }
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
+
+
         /* 3 õpilase valitud andmetüübi */
 
         public bool? Vulgar { get; set; }
