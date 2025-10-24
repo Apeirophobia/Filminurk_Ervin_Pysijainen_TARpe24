@@ -1,6 +1,7 @@
 ﻿using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
+using Filminurk.Data.Migrations;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -45,6 +46,9 @@ namespace Filminurk.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MoviesCreateUpdateViewModel vm)
         {
+            if (ModelState.IsValid == true)
+            {
+
             var dto = new MoviesDTO()
             {
                 ID = vm.ID,
@@ -74,6 +78,8 @@ namespace Filminurk.Controllers
             if (result == null)
             {
                 return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -217,8 +223,10 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
+            ImageViewModel[] images = await FileFromDatabase(id);
 
             var vm = new MoviesDetailsViewModel();
+            
             vm.ID = movie.ID;
             vm.Title = movie.Title;
             vm.Description = movie.Description;
@@ -231,10 +239,24 @@ namespace Filminurk.Controllers
             vm.IsOnAdultSwim = movie.IsOnAdultSwim;
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
+            vm.Images.AddRange(images);
 
             return View(vm);
         }
-        
-    
+
+        private async Task<ImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    IsPoster = y.isPoster,
+                    FilePath = y.ExistingFilePath
+                }
+                ).ToArrayAsync();
+
+        }
     }
 }
