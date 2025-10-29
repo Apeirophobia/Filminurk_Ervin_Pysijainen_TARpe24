@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Filminurk.Models.Comments.UserCommentsIndexViewModel>
+
+@{
+	int rowNumber = 1;
+}
+
+<div>
+	<a asp-action="NewComment" asp-controller="UserComments" type="submit" class="btn btn-primary">Make new comment</a>
+</div>
+
+<div class="h1">
+	Kasutajate arvustused
+</div>
+
+<div>
+	<form method="get">
+		<table class="table-hover">
+			<thead>
+				<tr>
+					<th scope="col col">JKN</th>
+					<th scope="col col">CommentID</th>
+					<th scope="col col">ComemntBody</th>
+					<th scope="col col">IsHelpful</th>
+					<th scope="col col">CommentCreatedAt</th>
+				</tr>
+			</thead>
+		</table>
+	</form>
+</div>

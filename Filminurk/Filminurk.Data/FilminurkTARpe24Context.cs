@@ -13,6 +13,7 @@ namespace Filminurk.Data
         public FilminurkTARpe24Context(DbContextOptions<FilminurkTARpe24Context> options) : base(options) { }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<FileToApi> FilesToApi { get; set; }
+        public DbSet<UserComment> UserComments { get; set; }
 
     }
 }

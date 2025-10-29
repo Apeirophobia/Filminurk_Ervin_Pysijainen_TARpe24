@@ -37,7 +37,7 @@ namespace Filminurk.ApplicationServices.Services
                 foreach (var file in dto.Files)
                 {
                     string uploadsFolder = Path.Combine(_weblost.ContentRootPath, "wwwroot", "multipleFileUpload");
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.Name;
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
