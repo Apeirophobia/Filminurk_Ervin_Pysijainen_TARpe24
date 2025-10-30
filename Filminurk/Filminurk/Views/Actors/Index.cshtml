@@ -5,7 +5,7 @@
 }
 
 <div>
-	<a asp-action="Create" asp-contorller="Actors" type="submit" class="btn btn-primary">Lisa Näitleja</a>
+	<a asp-action="CreateUpdate" asp-contorller="Actors" type="submit" class="btn btn-primary">Lisa Näitleja</a>
 </div>
 
 <div>
@@ -29,7 +29,6 @@
 						<td>@actor.LastName</td>
 						<td>@actor.FavouriteGenre</td>
 						<td>@actor.HasAwards</td>
-						<td></td>
 						<td>
 							<a asp-action="Delete" asp-controller="Actors" asp-route-id="@actor.ActorID" class="btn btn-danger">Kustuta</a>
 							<a asp-action="Update" asp-controller="Actors" asp-route-id="@actor.ActorID" class="btn btn-primary">Muuda</a>
