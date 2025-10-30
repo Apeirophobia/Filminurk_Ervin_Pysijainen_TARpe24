@@ -24,7 +24,7 @@ namespace Filminurk.Controllers
                 ActorID = x.ActorID,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                MoviesActedFor = x.MoviesActedFor,
+                // MoviesActedFor = x.MoviesActedFor,
                 FavouriteGenre = x.FavouriteGenre,
                 HasAwards = x.HasAwards
             });
