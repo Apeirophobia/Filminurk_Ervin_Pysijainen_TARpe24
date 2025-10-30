@@ -60,7 +60,7 @@ namespace Filminurk.Data.Migrations
 
                     b.HasKey("ActorID");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("Filminurk.Core.Domain.FileToApi", b =>
@@ -80,7 +80,7 @@ namespace Filminurk.Data.Migrations
 
                     b.HasKey("ImageID");
 
-                    b.ToTable("FilesToApi");
+                    b.ToTable("FilesToApi", (string)null);
                 });
 
             modelBuilder.Entity("Filminurk.Core.Domain.Movie", b =>
@@ -127,7 +127,7 @@ namespace Filminurk.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Filminurk.Core.Domain.UserComment", b =>
@@ -168,7 +168,7 @@ namespace Filminurk.Data.Migrations
 
                     b.HasIndex("MovieID");
 
-                    b.ToTable("UserComments");
+                    b.ToTable("UserComments", (string)null);
                 });
 
             modelBuilder.Entity("Filminurk.Core.Domain.UserComment", b =>
