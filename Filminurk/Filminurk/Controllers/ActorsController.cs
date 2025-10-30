@@ -1,4 +1,5 @@
-﻿using Filminurk.Data;
+﻿using Filminurk.Core.Dto;
+using Filminurk.Data;
 using Filminurk.Models.Actors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,35 @@ namespace Filminurk.Controllers
             });
 
             return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult CreateUpdate()
+        {
+            ActorsCreateUpdateViewModel result = new();
+            return View("CreateUpdate", result);            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ActorsCreateUpdateViewModel vm)
+        {
+            if (ModelState.IsValid == true)
+            {
+                var dto = new ActorsDTO()
+                {
+                    ActorID = vm.ActorID,
+                    FirstName = vm.FirstName,
+                    LastName = vm.LastName,
+                    NickName = vm.NickName,
+                    MoviesActedFor = vm.MoviesActedFor,
+                    FavouriteGenre = vm.FavouriteGenre,
+                    HasAwards = vm.HasAwards,
+                    American = vm.American,
+                    EntryCreatedAt = vm.EntryCreatedAt,
+                    EntryModifiedAt = vm.EntryModifiedAt
+                };
+                var result = await _actorServices.Create(dto);
+            }
         }
     }
 }
