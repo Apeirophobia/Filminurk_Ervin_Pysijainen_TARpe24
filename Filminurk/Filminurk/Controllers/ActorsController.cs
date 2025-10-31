@@ -72,5 +72,31 @@ namespace Filminurk.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var actor = await _actorServices.DetailsAsync(id);
+
+            if (actor == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new ActorsDeleteViewModel();
+            vm.ActorID = actor.ActorID;
+            vm.FirstName = actor.FirstName;
+            vm.LastName = actor.LastName;
+            vm.NickName = actor.NickName;
+            vm.MoviesActedFor = actor.MoviesActedFor;
+            vm.FavouriteGenre = actor.FavouriteGenre;
+            vm.HasAwards = actor.HasAwards;
+            vm.American = actor.American;
+            vm.EntryCreatedAt = actor.EntryCreatedAt;
+            vm.EntryModifiedAt = actor.EntryModifiedAt;
+
+            return View(vm);
+
+        }
     }
 }
