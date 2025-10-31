@@ -98,5 +98,17 @@ namespace Filminurk.Controllers
             return View(vm);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var movie = await _actorServices.Delete(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
