@@ -94,7 +94,7 @@ namespace Filminurk.Controllers
             vm.American = actor.American;
             vm.EntryCreatedAt = actor.EntryCreatedAt;
             vm.EntryModifiedAt = actor.EntryModifiedAt;
-
+            ViewBag.ActorID = actor.ActorID;
             return View(vm);
 
         }
@@ -102,8 +102,8 @@ namespace Filminurk.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
-            var movie = await _actorServices.Delete(id);
-            if (movie == null)
+            var actor = await _actorServices.Delete(id);
+            if (actor == null)
             {
                 return NotFound();
             }
