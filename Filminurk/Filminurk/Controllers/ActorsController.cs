@@ -142,7 +142,30 @@ namespace Filminurk.Controllers
             return View("CreateUpdate", vm);
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Update(ActorsCreateUpdateViewModel vm)
+        {
+            var dto = new ActorsDTO()
+            {
+                ActorID = vm.ActorID,
+                FirstName = vm.FirstName,
+                LastName = vm.LastName,
+                NickName = vm.NickName,
+                MoviesActedFor = vm.MoviesActedFor,
+                FavouriteGenre = vm.FavouriteGenre,
+                HasAwards = vm.HasAwards,
+                American = vm.American,
+                EntryCreatedAt = vm.EntryCreatedAt,
+                EntryModifiedAt = DateTime.Now
+            };
 
-        
+            var result = await _actorServices.Update(dto);
+            
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
