@@ -1,4 +1,5 @@
-﻿using Filminurk.ApplicationServices.Services;
+﻿using System.Runtime.CompilerServices;
+using Filminurk.ApplicationServices.Services;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
@@ -166,6 +167,31 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var actor = await _actorServices.DetailsAsync(id);
+
+            if (actor == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new ActorsDetailsViewModel();
+
+            vm.ActorID = actor.ActorID;
+            vm.FirstName = actor.FirstName;
+            vm.LastName = actor.LastName;
+            vm.NickName = actor.NickName;
+            vm.MoviesActedFor = actor.MoviesActedFor;
+            vm.FavouriteGenre = actor.FavouriteGenre;
+            vm.HasAwards = actor.HasAwards;
+            vm.American = actor.American;
+            vm.EntryCreatedAt = actor.EntryCreatedAt;
+            vm.EntryModifiedAt = actor.EntryModifiedAt;
+
+            return View(vm);
         }
     }
 }
