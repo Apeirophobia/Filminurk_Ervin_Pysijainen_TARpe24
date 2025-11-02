@@ -169,6 +169,7 @@ namespace Filminurk.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             var actor = await _actorServices.DetailsAsync(id);
