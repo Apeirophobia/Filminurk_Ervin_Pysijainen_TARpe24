@@ -156,7 +156,7 @@ namespace Filminurk.Controllers
                 HasAwards = vm.HasAwards,
                 American = vm.American,
                 EntryCreatedAt = vm.EntryCreatedAt,
-                EntryModifiedAt = DateTime.Now
+                EntryModifiedAt = vm.EntryModifiedAt
             };
 
             var result = await _actorServices.Update(dto);
