@@ -31,7 +31,8 @@ namespace Filminurk.Controllers
                 LastName = x.LastName,
                 // MoviesActedFor = x.MoviesActedFor,
                 FavouriteGenre = x.FavouriteGenre,
-                HasAwards = x.HasAwards
+                HasAwards = x.HasAwards,
+                American = x.American
             });
 
             return View(result);

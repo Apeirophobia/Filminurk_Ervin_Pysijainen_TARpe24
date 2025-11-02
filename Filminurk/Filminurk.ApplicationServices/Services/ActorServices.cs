@@ -30,6 +30,7 @@ namespace Filminurk.ApplicationServices.Services
             actor.MoviesActedFor = dto.MoviesActedFor;
             actor.FavouriteGenre = dto.FavouriteGenre;
             actor.HasAwards = dto.HasAwards;
+            actor.American = dto.American;
             actor.EntryCreatedAt = DateTime.Now;
             actor.EntryModifiedAt = DateTime.Now;
 

@@ -13,6 +13,8 @@ namespace Filminurk.Models.Actors
         // 3 õpilase andmetüübi
         public ActorsFavouriteGenre? FavouriteGenre { get; set; }
         public bool? HasAwards { get; set; }
+        public bool? American { get; set; }
+
 
     }
 }
