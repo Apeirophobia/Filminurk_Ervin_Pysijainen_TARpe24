@@ -48,6 +48,18 @@
 			@Html.DisplayFor(model => model.American)
 		</div>
 	</dl>
+
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="MoviesActedFor" class="col-sm-2 col-form-label"></label>
+			@foreach (var movie in Model.MoviesActedFor)
+			{
+				string txtmovie = movie + ", ";
+				@Html.DisplayFor(mov => txtmovie)
+			}
+		</div>
+	</dl>
+
 	<dl class="row">
 		<div class="form-group-row">
 			<label asp-for="EntryCreatedAt" class="col-sm-2 col-form-label"></label>

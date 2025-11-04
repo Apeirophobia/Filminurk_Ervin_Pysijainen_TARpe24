@@ -5,12 +5,12 @@
 <div>
 	<h4>Näitleja info</h4>
 	<dl class="row">
-		
+
 		<div class="form-group-row">
 			<label asp-for="ActorID" class="col-sm-2 col-form-label"></label>
 			@Html.DisplayFor(model => model.ActorID)
 		</div>
-		
+
 	</dl>
 
 	<dl class="row">
@@ -72,9 +72,17 @@
 	<dl class="row">
 		<div class="form-group-row">
 			<label asp-for="MoviesActedFor" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.MoviesActedFor)
+			@foreach (var movie in Model.MoviesActedFor)
+			{
+				string txtmovie = movie + ", ";
+				@Html.DisplayFor(mov => txtmovie)
+		}
 		</div>
 	</dl>
+
+	
+	
+
 	<hr />
 	<a asp-action="Index" asp-controller="Actors" class="btn btn-primary">Tagasi loendisse</a>
 </div>
