@@ -6,6 +6,8 @@ using Filminurk.Data;
 using Filminurk.Models.Actors;
 // using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Controllers
 {
@@ -31,7 +33,6 @@ namespace Filminurk.Controllers
                 ActorID = x.ActorID,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                // MoviesActedFor = x.MoviesActedFor,
                 FavouriteGenre = x.FavouriteGenre,
                 HasAwards = x.HasAwards,
                 American = x.American
@@ -44,7 +45,18 @@ namespace Filminurk.Controllers
         public IActionResult CreateUpdate()
         {
             ActorsCreateUpdateViewModel result = new();
+            PopulateMoviesDropDownList();
+
             return View("CreateUpdate", result);            
+        }
+
+        private void PopulateMoviesDropDownList(object selectedMovie = null)
+        {
+            var moviesQuery = from m in _context.Movies
+                                   orderby m.Title
+                                   select m;
+
+           ViewBag.MovieTitle = new SelectList(moviesQuery, "Title", "Title", selectedMovie);
         }
 
         [HttpPost]
@@ -117,6 +129,7 @@ namespace Filminurk.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
+            PopulateMoviesDropDownList();
             if (id == null)
             {
                 return NotFound();
