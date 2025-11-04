@@ -8,7 +8,7 @@ namespace Filminurk.Models.Actors
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? NickName { get; set; }
-        public List<string>? MoviesActedFor { get; set; }
+        public List<Movie>? MoviesActedFor { get; set; }
         // public Guid PortraitID { get; set; }
 
         // 3 õpilase andmetüübi
