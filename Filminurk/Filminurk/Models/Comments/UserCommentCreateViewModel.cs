@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Filminurk.Core.Dto
+﻿namespace Filminurk.Models.Comments
 {
-    public class UserCommentDTO
+    public class UserCommentCreateViewModel
     {
-        [Key]
         public Guid CommentID { get; set; }
-        public string CommentUserID { get; set; }
+        public string? CommentUserID { get; set; }
         public string CommentBody { get; set; }
         public int CommentedScore { get; set; }
         public int IsHelpful { get; set; } // Like

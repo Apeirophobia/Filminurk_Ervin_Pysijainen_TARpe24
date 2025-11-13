@@ -1,0 +1,33 @@
+﻿@model Filminurk.Models.Comments.UserCommentCreateViewModel
+<h1>Add new comment:</h1>
+
+<div>
+	<form method="post" enctype="multipart/form-data">
+		<input asp-for="CommentID" type="hidden" />
+		<input asp-for="CommentCreatedAt" type="hidden"/>
+		<input asp-for="CommentModifiedAt" type="hidden"/>
+		<input asp-for="CommentUserID" type="hidden"/>
+
+
+		<div>
+			<label asp-for="CommentBody" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="CommentBody"/>
+
+			</div>
+		</div>
+
+		<div>
+			<label asp-for="CommentedScore" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="CommentedScore"/>
+			</div>
+		</div>
+
+		<input asp-action="NewComment" asp-controller="UserComments" type="submit" class="btn btn-success"
+		value="Post Comment"/>
+
+		<a asp-action="Index" asp-controller="UserComments" class="btn btn-success">Back</a>
+
+	</form>
+</div>
