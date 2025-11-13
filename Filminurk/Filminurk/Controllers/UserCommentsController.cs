@@ -1,4 +1,5 @@
-﻿using Filminurk.ApplicationServices.Services;
+﻿using System.ComponentModel.Design;
+using Filminurk.ApplicationServices.Services;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
@@ -23,8 +24,8 @@ namespace Filminurk.Controllers
         {
             var result = _context.UserComments
                 .Select(
-                c => new UserCommentsIndexViewModel 
-                { 
+                c => new UserCommentsIndexViewModel
+                {
                     CommentID = c.CommentID,
                     CommentBody = c.CommentBody,
                     IsHarmful = c.IsHarmful,
@@ -78,5 +79,35 @@ namespace Filminurk.Controllers
             return NotFound();
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailsAdmin(Guid id)
+        {
+            
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var requestedComment = await _userCommentServices.DetailsAsync(id);
+
+            if (requestedComment == null)
+            {
+                return NotFound();
+            }
+
+            var commentVM = new UserCommentsIndexViewModel();
+            commentVM.CommentID = requestedComment.CommentID;
+            commentVM.CommentBody = requestedComment.CommentBody;
+            commentVM.CommentUserID = requestedComment.CommentUserID;
+            commentVM.CommentedScore = requestedComment.CommentedScore;
+            commentVM.CommentCreatedAt = requestedComment.CommentCreatedAt;
+            commentVM.CommentModifiedAt = requestedComment.CommentModifiedAt;
+            commentVM.IsHelpful = requestedComment.IsHelpful;
+            commentVM.IsHarmful = requestedComment.IsHarmful;
+
+            return View(commentVM);
+        }
+
     }
 }
