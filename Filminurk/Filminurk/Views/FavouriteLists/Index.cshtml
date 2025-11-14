@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Filminurk.Models.FavouriteLists.FavouriteListsIndexViewModel>
+
+@{
+	int rowNumber = 1;
+	int currentRow = 1;
+	int currentTile = 1;
+	int tilesInRow = 1;
+}
+
+<div>
+	<a asp-action="CreateList" asp-controller="FavouriteLists" class="btn btn-primary">Tee uus lemmikute nimekiri</a>
+</div>
+<div @* no class currently, no design specified *@>
+	<form method="post">
+		<table class="table">
+			<thead>
+				@if (!Model.Any()) {
+					<tr>
+						<th scope="col" colspan="2"></th>
+						<span>Kahjuks ei leidnud ühtegi lemmikute nimekirja</span>
+					</tr>
+				}
+				else {
+					<tr>
+						<th scope="col" colspan="2">
+							<span>Sinu nimekirjad:</span>
+						</th>
+						
+					
+					</tr>
+				}
+			</thead>
+			<tbody>
+				@if (!Model.Any())
+				{
+					<table>
+						<tr>
+							<td scope="col" colspan="2">Sorry, no list</td>
+						</tr>
+						<tr>
+							<td> <img width="128" src="~/lib/defaultassets/image/noposter.png"/></td>
+						</tr>
+					</table>
+				}
+				else
+				{
+					
+				}
+			</tbody>
+		</table>
+	</form>
+</div>
