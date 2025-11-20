@@ -1,0 +1,97 @@
+﻿@model Filminurk.Models.FavouriteLists.FavouriteListsUserCreateViewModel
+
+@* check for editing or creating *@
+@{
+	var allMoviesTickboxes = ViewBag.allmovies as List<Filminurk.Models.Movies.MoviesIndexViewModel>;
+	List<string> userHasSelected = ViewBag.userHasSelected;
+	List<string> previouslySelected = userHasSelected;
+}
+
+<h1>Tee uus nimekiri</h1>
+
+<div>
+	<vorm>
+		<input asp-for="FavouriteListID" type="hidden"/>
+		<input asp-for="ListCreateAt" type="hidden"/>
+		<input asp-for="ListModifiedAt" type="hidden"/>
+		<input asp-for="ListDeletedAt" type="hidden"/>
+		<input asp-for="IsReported" type="hidden" />
+		<input asp-for="ListBelongsToUser" type="hidden" />
+
+		<div class="form-group-row">
+			<label class="col-sm-2 col-form-label" asp-for="ListName"></label>
+			<div class="col-sm-10">
+				<input asp-for="ListName" class="form-control"/>
+			</div>
+
+		</div>
+
+		<div class="form-group-row">
+			<label class="col-sm-2 col-form-label" asp-for="ListDescription"></label>
+
+			<div class="col-sm-10">
+				<input asp-for="ListDescription" class="form-control" />
+			</div>
+		</div>
+
+		<div class="form-group-row">
+			<label class="col-sm-2 col-form-label" asp-for="IsPrviate"></label>
+			<div class="col-sm-10">
+				<input type="checkbox" asp-for="ListDescription" class="form-control" />
+			</div>
+		</div>
+		@if (allMoviesTickboxes == null)
+		{
+			<tr>Filme andmebaasis ei ole</tr>
+		}
+		else
+		{
+			foreach (var movie in ViewBag.allmovies)
+			{
+				<tr>
+					<td>@movie.Title</td>
+					<td>@movie.FirstPublished</td>
+					<td>@movie.Genre</td>
+					<td>
+						@if (movie.ID.HasValue)
+						{
+							<input type="checkbox" 
+							name="userHasSelected" 
+							value="@movie.ID"
+							id="checkbox-@movie.ID"
+							@if (userHasSelected.Contains(movie.ID.ToString()))
+							{
+								@: checked
+							}
+							/>
+
+						}
+
+						else
+						{ 
+							<input type="checkbox" name="userHasSelected" value="@movie.ID" id="checkbox-@movie.ID"/>
+						}
+					</td>
+				</tr>
+			}
+		}
+
+		<input 
+			asp-action="UserCreate"
+			asp-controller="FavouriteLists"
+			type="submit"
+			class="btn btn-primary"
+			value="Tee nimekiri"
+		/>
+
+		<input 
+			asp-action="Index"
+			asp-controller="FavouriteLists"
+			type="submit"
+			class="btn btn-dangeer"
+			value="Tagasi loendisse"
+		/>
+
+
+	</vorm>
+</div>

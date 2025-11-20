@@ -12,6 +12,7 @@ builder.Services.AddScoped<IMovieServices, MovieServices>();
 builder.Services.AddScoped<IFilesServices, FilesServices>();
 builder.Services.AddScoped<IActorServices, ActorServices>();
 builder.Services.AddScoped<IUserCommentsServices, UserCommentsServices>();
+builder.Services.AddScoped<IFavouriteListsServices, FavouriteListsServices>();
 
 var app = builder.Build();
 
