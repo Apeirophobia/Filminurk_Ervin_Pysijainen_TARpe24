@@ -9,6 +9,7 @@
 
 <div>
 	<a asp-action="CreateList" asp-controller="FavouriteLists" class="btn btn-primary">Tee uus lemmikute nimekiri</a>
+	<a asp-action="Index" asp-controller="Home" class="btn btn-primary">Tagasi pealehele</a>
 </div>
 <div @* no class currently, no design specified *@>
 	<form method="post">
@@ -25,8 +26,8 @@
 						<th scope="col" colspan="2">
 							<span>Sinu nimekirjad:</span>
 						</th>
-						
-					
+
+
 					</tr>
 				}
 			</thead>
@@ -44,7 +45,26 @@
 				}
 				else
 				{
-					
+					@foreach (var list in Model)
+					{
+						<table>
+							<tr>
+								<td colspan="2">
+									<a asp-action="ListDetailsListOwner" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID">@list.ListName</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									@foreach (var image in list.Image)
+									{
+											<partial name="_ImageIndex" model="image"></partial>
+									}
+								</td>
+								<td>@list.ListDescription</td>
+							</tr>
+						</table>
+						rowNumber++;
+					}
 				}
 			</tbody>
 		</table>
