@@ -7,6 +7,7 @@ using Filminurk.Data;
 using Filminurk.Models.FavouriteLists;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Filminurk.Controllers
 {
@@ -88,9 +89,11 @@ namespace Filminurk.Controllers
                 List<Guid> tempParts = new();
                 foreach (var stringID in userHasSelected)
                 {
+                    // lisame iga stringi kohta jäjrendis userhasselected teisendatud guidi
                     tempParts.Add(Guid.Parse(stringID));
-                }
 
+                }
+                // teeme uue DTO nimekirja jaoks
                 var newListDto = new FavouriteListDTO()
                 { 
                 };
@@ -104,14 +107,25 @@ namespace Filminurk.Controllers
                 newListDto.ListBelongsToUser = "00000000-0000-0000-0000000000000001";
                 newListDto.ListModifiedAt = DateTime.UtcNow;
                 newListDto.ListDeletedAt = (DateTime)vm.ListDeletedAt;
-
-                List<Guid> convertedIDs = new List<Guid>();
-                if (newListDto.ListOfMovies != null)
+                
+                // lisa filmid nimekirja, olemasolevate id-de põhiselt
+                var listofmoviestoadd = new List<Movie>();
+                foreach (var movieId in tempParts)
                 {
-                    convertedIDs = MovieToId(newListDto.ListOfMovies);
+                    var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
+                    listofmoviestoadd.Add((Movie)thismovie);
                 }
 
-                var newList = await _FavouriteListsServices.Create(newListDto, convertedIDs);
+                newListDto.ListOfMovies = listofmoviestoadd;
+
+
+                // List<Guid> convertedIDs = new List<Guid>();
+                //if (newListDto.ListOfMovies != null)
+                //{
+                //    convertedIDs = MovieToId(newListDto.ListOfMovies);
+                //}
+
+                var newList = await _FavouriteListsServices.Create(newListDto );   
                 if (newList != null)
                 {
                     return BadRequest();

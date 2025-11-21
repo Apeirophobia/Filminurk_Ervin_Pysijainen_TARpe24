@@ -33,7 +33,7 @@ namespace Filminurk.ApplicationServices.Services
             return result;
         }
 
-        public async Task<FavouriteList> Create(FavouriteListDTO dto, List<Movie> selectedMovies)
+        public async Task<FavouriteList> Create(FavouriteListDTO dto /*List<Movie> selectedMovies*/)
         {
             FavouriteList newList = new();
             newList.FavouriteListID = Guid.NewGuid();
@@ -42,7 +42,7 @@ namespace Filminurk.ApplicationServices.Services
             newList.ListCreateAt = dto.ListCreateAt;
             newList.ListModifiedAt = dto.ListModifiedAt;
             newList.ListDeletedAt = dto.ListDeletedAt;
-            newList.ListOfMovies = selectedMovies;
+            newList.ListOfMovies = dto.ListOfMovies;
 
             await _context.FavouriteLists.AddAsync(newList);
             await _context.SaveChangesAsync();

@@ -46,12 +46,12 @@
 		}
 		else
 		{
-			foreach (var movie in ViewBag.allmovies)
+			@foreach (var movie in allMoviesTickboxes)
 			{
 				<tr>
-					<td>@movie.Title</td>
-					<td>@movie.FirstPublished</td>
-					<td>@movie.Genre</td>
+
+					
+
 					<td>
 						@if (movie.ID.HasValue)
 						{
@@ -64,6 +64,7 @@
 								@: checked
 							}
 							/>
+							
 
 						}
 
@@ -71,26 +72,26 @@
 						{ 
 							<input type="checkbox" name="userHasSelected" value="@movie.ID" id="checkbox-@movie.ID"/>
 						}
+
+					
 					</td>
+
+					<td>@movie.Title</td>
+					<td>@movie.FirstPublished</td>
+					<td>@movie.Genre</td>
+					<br />
+					
 				</tr>
 			}
 		}
 
-		<input 
-			asp-action="UserCreate"
-			asp-controller="FavouriteLists"
-			type="submit"
-			class="btn btn-primary"
-			value="Tee nimekiri"
-		/>
+		<input asp-action="UserCreate" asp-controller="FavouriteLists" type="submit" class="btn btn-primary" value="Tee nimekiri"/>
 
-		<input 
+		<a  
 			asp-action="Index"
 			asp-controller="FavouriteLists"
 			type="submit"
-			class="btn btn-dangeer"
-			value="Tagasi loendisse"
-		/>
+		>Tagasi loendisse</a>
 
 
 	</vorm>
