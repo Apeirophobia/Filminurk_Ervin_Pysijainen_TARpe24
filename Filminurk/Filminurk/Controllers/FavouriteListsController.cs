@@ -160,7 +160,7 @@ namespace Filminurk.Controllers
                     IsPrviate = stl.IsPrviate,
                     ListOfMovies = stl.ListOfMovies,
                     IsReported = stl.IsReported,
-                    Image = _context.FilesToDatabase
+                    /*Image = _context.FilesToDatabase
                     .Where(i => i.ListID == stl.FavouriteListID)
                     .Select(si => new FavouriteListIndexImageViewModel
                     {
@@ -169,7 +169,7 @@ namespace Filminurk.Controllers
                         ImageData = si.ImageData,
                         ImageTitle = si.ImageTitle,
                         Image = string.Format("data:image/gif;base64, {0}", Convert.ToBase64String(si.ImageData))
-                    }).ToList().First()
+                    }).ToList().First()*/
                 }).First();
 
             if (thislist == null)
@@ -178,6 +178,33 @@ namespace Filminurk.Controllers
             }
             // add viewdata attribute here later to discernbetween user and admin
             return View("Details", thislist);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserTogglePrivacy(Guid id)
+        {
+            FavouriteList thislist = await _FavouriteListsServices.DetailsAsync(id);
+
+            FavouriteListDTO updateList = new FavouriteListDTO();
+
+            updateList.FavouriteListID = thislist.FavouriteListID;
+            updateList.ListBelongsToUser = thislist.ListBelongsToUser;
+            updateList.IsMovieOrActor = thislist.IsMovieOrActor;
+            updateList.ListName = thislist.ListName;
+            updateList.ListDescription = thislist.ListDescription;
+            updateList.IsPrviate = thislist.IsPrviate;
+            updateList.ListOfMovies = thislist.ListOfMovies;
+            updateList.ListCreateAt = thislist.ListCreateAt;
+            updateList.ListModifiedAt = DateTime.UtcNow;
+            updateList.ListDeletedAt = thislist.ListDeletedAt;
+            updateList.IsReported = thislist.IsReported;
+            
+
+            thislist.IsPrviate = !thislist.IsPrviate;
+
+            _FavouriteListsServices.Update(thislist);
+
+            return View("Details");
         }
 
         private List<Guid> MovieToId(List<Movie> listOfMovies)

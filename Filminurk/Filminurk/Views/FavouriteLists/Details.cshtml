@@ -13,9 +13,9 @@
 	}
 	<table>
 		<tr>@Model.ListName</tr>
-		<tr>
+		@* <tr>
 			<partial name="_ImageIndex" model="@Model.Image" />
-		</tr>
+		</tr> *@
 	</table>
 </div>
 
@@ -46,13 +46,14 @@
 		}
 	</table>
 	<div>
-		<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-		type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
-		<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-		type="submit" class="btn btn-warning" value="Muuda nimekiri privaatseks"/>
-		<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-		type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
-		<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
-
+		<form>
+			<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+			type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
+			<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+			type="submit" class="btn btn-warning" value="Muuda nimekiri privaatseks"/>
+			<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+			type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
+			<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
+		</form>
 	</div>
 </div>
