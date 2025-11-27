@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using Filminurk.ApplicationServices.Services;
 using Filminurk.Core.Domain;
 using Filminurk.Core.Dto;
@@ -84,8 +85,8 @@ namespace Filminurk.Controllers
         public async Task<IActionResult> UserCreate(FavouriteListsUserCreateViewModel vm, List<String> userHasSelected, 
             List<MoviesIndexViewModel> movies)
         {
-            if (ModelState.IsValid == true)
-            {
+            /*if (ModelState.IsValid == true)
+            {*/
                 List<Guid> tempParts = new();
                 foreach (var stringID in userHasSelected)
                 {
@@ -104,15 +105,15 @@ namespace Filminurk.Controllers
                 newListDto.ListBelongsToUser = vm.ListBelongsToUser;
                 newListDto.IsPrviate = vm.IsPrviate;
                 newListDto.ListCreateAt = DateTime.UtcNow;
-                newListDto.ListBelongsToUser = "00000000-0000-0000-0000000000000001";
+                newListDto.ListBelongsToUser = Guid.NewGuid().ToString();
                 newListDto.ListModifiedAt = DateTime.UtcNow;
-                newListDto.ListDeletedAt = (DateTime)vm.ListDeletedAt;
+                newListDto.ListDeletedAt = vm.ListDeletedAt;
                 
                 // lisa filmid nimekirja, olemasolevate id-de põhiselt
                 var listofmoviestoadd = new List<Movie>();
                 foreach (var movieId in tempParts)
                 {
-                    var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
+                    var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToList().First();
                     listofmoviestoadd.Add((Movie)thismovie);
                 }
 
@@ -126,15 +127,57 @@ namespace Filminurk.Controllers
                 //}
 
                 var newList = await _FavouriteListsServices.Create(newListDto );   
-                if (newList != null)
+                if (newList == null)
                 {
                     return BadRequest();
                 }
 
                 return RedirectToAction("Index", vm);
 
-            }
+            //}
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserDetails(Guid id, Guid thisuserid)
+        {
+            if (id == null || thisuserid == null)
+            {
+                return BadRequest();
+                //TODO: return corresponding errorviews, id not found for list and user login error for userid
+            }
+
+            var thislist = _context.FavouriteLists
+                .Where(l => l.FavouriteListID == id && l.ListBelongsToUser == thisuserid.ToString())
+                .Select(
+                stl => new FavouriteListUserDetailsViewModel
+                {
+                    FavouriteListID = stl.FavouriteListID,
+                    ListBelongsToUser = stl.ListBelongsToUser,
+                    IsMovieOrActor = stl.IsMovieOrActor,
+                    ListName = stl.ListName,
+                    ListDescription = stl.ListDescription,
+                    IsPrviate = stl.IsPrviate,
+                    ListOfMovies = stl.ListOfMovies,
+                    IsReported = stl.IsReported,
+                    Image = _context.FilesToDatabase
+                    .Where(i => i.ListID == stl.FavouriteListID)
+                    .Select(si => new FavouriteListIndexImageViewModel
+                    {
+                        ListID = si.ListID,
+                        ImageID = si.ImageID,
+                        ImageData = si.ImageData,
+                        ImageTitle = si.ImageTitle,
+                        Image = string.Format("data:image/gif;base64, {0}", Convert.ToBase64String(si.ImageData))
+                    }).ToList().First()
+                }).First();
+
+            if (thislist == null)
+            {
+                return NotFound();
+            }
+            // add viewdata attribute here later to discernbetween user and admin
+            return View("Details", thislist);
         }
 
         private List<Guid> MovieToId(List<Movie> listOfMovies)
@@ -146,5 +189,7 @@ namespace Filminurk.Controllers
             }
             return result;
         }
+
+
     }
 }

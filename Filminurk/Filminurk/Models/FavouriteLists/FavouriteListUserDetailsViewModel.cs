@@ -2,7 +2,7 @@
 
 namespace Filminurk.Models.FavouriteLists
 {
-    public class FavouriteListsUserCreateViewModel
+    public class FavouriteListUserDetailsViewModel
     {
         public Guid FavouriteListID { get; set; }
         public string ListBelongsToUser { get; set; }
@@ -19,6 +19,6 @@ namespace Filminurk.Models.FavouriteLists
         public DateTime ListDeletedAt { get; set; }
         public bool? IsReported { get; set; } = false;
         // imagemodel for index
-        public List<FavouriteListIndexImageViewModel> Image { get; set; } = new List<FavouriteListIndexImageViewModel>();
+        public FavouriteListIndexImageViewModel Image { get; set; } = new FavouriteListIndexImageViewModel();
     }
 }

@@ -1,0 +1,58 @@
+﻿@model Filminurk.Models.FavouriteLists.FavouriteListUserDetailsViewModel
+
+@{
+	int rowNumber = 1;
+	ViewData["Title"] = "Favourite List Details";
+}
+
+<div>
+	@if (Model.IsReported == true)
+	{
+		@: Sinu nimekiri on perses
+		@: Oleme seadnud nimekirja privaatseks, kuni admin selle üle vaatab. <br/>
+	}
+	<table>
+		<tr>@Model.ListName</tr>
+		<tr>
+			<partial name="_ImageIndex" model="@Model.Image" />
+		</tr>
+	</table>
+</div>
+
+<div>
+	<table class="table">
+		@foreach (var movie in Model.ListOfMovies)
+		{
+			<tr>
+				<table class="table" style="border.thick;">
+					<tr>
+						<td colspan="2">@movie.Title</td>
+					</tr>
+
+					<tr>
+						<td>(IMAGE HERE)</td>
+						<td>
+							<table>
+								<tr>@movie.Description</tr>
+								<tr>@movie.Director</tr>
+								<tr>@movie.IsOnAdultSwim</tr>
+								<tr>@movie.CurrentRating</tr>
+								<tr>@movie.Genre</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</tr>
+		}
+	</table>
+	<div>
+		<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+		type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
+		<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+		type="submit" class="btn btn-warning" value="Muuda nimekiri privaatseks"/>
+		<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
+		type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
+		<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
+
+	</div>
+</div>

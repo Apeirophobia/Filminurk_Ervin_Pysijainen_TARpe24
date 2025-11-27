@@ -10,7 +10,7 @@
 <h1>Tee uus nimekiri</h1>
 
 <div>
-	<vorm>
+	<form method="post">
 		<input asp-for="FavouriteListID" type="hidden"/>
 		<input asp-for="ListCreateAt" type="hidden"/>
 		<input asp-for="ListModifiedAt" type="hidden"/>
@@ -85,14 +85,15 @@
 			}
 		}
 
-		<input asp-action="UserCreate" asp-controller="FavouriteLists" type="submit" class="btn btn-primary" value="Tee nimekiri"/>
+		<input asp-action="UserCreate" asp-controller="FavouriteLists" type="submit" method="post" class="btn btn-primary" value="Tee nimekiri"/>
 
-		<a  
+		<input  
 			asp-action="Index"
 			asp-controller="FavouriteLists"
 			type="submit"
-		>Tagasi loendisse</a>
+			class="btn btn-primary"
+			value="Tagasi loendisse" />
 
 
-	</vorm>
+	</form>
 </div>

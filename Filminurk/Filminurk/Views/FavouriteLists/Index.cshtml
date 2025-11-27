@@ -50,7 +50,7 @@
 						<table>
 							<tr>
 								<td colspan="2">
-									<a asp-action="ListDetailsListOwner" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID">@list.ListName</a>
+									<a asp-action="UserDetails" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID" asp-route-thisuserid="@list.ListBelongsToUser">@list.ListName</a>
 								</td>
 							</tr>
 							<tr>
@@ -59,6 +59,8 @@
 									{
 											<partial name="_ImageIndex" model="image"></partial>
 									}
+									<td> <img width="128" src="~/lib/defaultassets/image/noposter.png" /></td>
+
 								</td>
 								<td>@list.ListDescription</td>
 							</tr>
