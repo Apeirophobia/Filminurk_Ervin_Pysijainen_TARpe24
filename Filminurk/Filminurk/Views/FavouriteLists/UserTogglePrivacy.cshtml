@@ -6,17 +6,17 @@
 }
 
 <div>
+	<h1>User Toggle Privacy</h1>
 	@if (Model.IsReported == true)
 	{
 		@: Sinu nimekiri on perses
-		@: Oleme seadnud nimekirja privaatseks, kuni admin selle üle vaatab. <br/>
+		@: Oleme seadnud nimekirja privaatseks, kuni admin selle üle vaatab. <br />
 	}
 	<table>
 		<tr>@Model.ListName</tr>
 		@* <tr>
 			<partial name="_ImageIndex" model="@Model.Image" />
 		</tr> *@
-		<tr>@Model.IsPrviate</tr>
 	</table>
 </div>
 
@@ -48,14 +48,9 @@
 	</table>
 	<div>
 		<form method="post">
-			<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-			type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
-			@* <a asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID" asp-route-thisuserid="@Model.ListBelongsToUser"
-			formmethod="get" class="btn btn-warning">Muuda privaatseks</a> *@
+
 			<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
 				   type="submit" class="btn btn-warning" value="Muuda nimekiri privaatseks" />
-			<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-			type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
 			<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
 		</form>
 	</div>

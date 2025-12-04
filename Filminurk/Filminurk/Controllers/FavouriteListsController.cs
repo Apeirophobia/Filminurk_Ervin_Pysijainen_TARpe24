@@ -33,9 +33,9 @@ namespace Filminurk.Controllers
                     IsMovieOrActor = x.IsMovieOrActor,
                     ListName = x.ListName,
                     ListDescription = x.ListDescription,
-
-                    ListCreateAt = x.ListCreateAt,
                     
+                    ListCreateAt = x.ListCreateAt,
+                    ListDeletedAt = (DateTime)x.ListDeletedAt,
                     Image =
                     (List<FavouriteListIndexImageViewModel>)_context.FilesToDatabase.Where(ml => ml.ListID == x.FavouriteListID)
                     .Select(li => new FavouriteListIndexImageViewModel()
@@ -179,6 +179,47 @@ namespace Filminurk.Controllers
             // add viewdata attribute here later to discernbetween user and admin
             return View("Details", thislist);
         }
+        //[HttpGet]
+        //public async Task<IActionResult> UserTogglePrivacy(Guid id, Guid thisuserid)
+        //{
+        //    if (id == null || thisuserid == null)
+        //    {
+        //        return BadRequest();
+        //        //TODO: return corresponding errorviews, id not found for list and user login error for userid
+        //    }
+
+        //    var thislist = _context.FavouriteLists
+        //        .Where(l => l.FavouriteListID == id && l.ListBelongsToUser == thisuserid.ToString())
+        //        .Select(
+        //        stl => new FavouriteListUserDetailsViewModel
+        //        {
+        //            FavouriteListID = stl.FavouriteListID,
+        //            ListBelongsToUser = stl.ListBelongsToUser,
+        //            IsMovieOrActor = stl.IsMovieOrActor,
+        //            ListName = stl.ListName,
+        //            ListDescription = stl.ListDescription,
+        //            IsPrviate = stl.IsPrviate,
+        //            ListOfMovies = stl.ListOfMovies,
+        //            IsReported = stl.IsReported,
+        //            /*Image = _context.FilesToDatabase
+        //            .Where(i => i.ListID == stl.FavouriteListID)
+        //            .Select(si => new FavouriteListIndexImageViewModel
+        //            {
+        //                ListID = si.ListID,
+        //                ImageID = si.ImageID,
+        //                ImageData = si.ImageData,
+        //                ImageTitle = si.ImageTitle,
+        //                Image = string.Format("data:image/gif;base64, {0}", Convert.ToBase64String(si.ImageData))
+        //            }).ToList().First()*/
+        //        }).First();
+
+        //    if (thislist == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    // add viewdata attribute here later to discernbetween user and admin
+        //    return View("UserTogglePrivacy", thislist);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> UserTogglePrivacy(Guid id)
@@ -192,19 +233,62 @@ namespace Filminurk.Controllers
             updateList.IsMovieOrActor = thislist.IsMovieOrActor;
             updateList.ListName = thislist.ListName;
             updateList.ListDescription = thislist.ListDescription;
-            updateList.IsPrviate = thislist.IsPrviate;
+            updateList.IsPrviate = !thislist.IsPrviate;
             updateList.ListOfMovies = thislist.ListOfMovies;
             updateList.ListCreateAt = thislist.ListCreateAt;
             updateList.ListModifiedAt = DateTime.UtcNow;
             updateList.ListDeletedAt = thislist.ListDeletedAt;
             updateList.IsReported = thislist.IsReported;
+            string UpdateServiceType = "Private";
+
+
+
+            var result = await _FavouriteListsServices.Update(updateList, UpdateServiceType);
             
+            if (result == null)
+            {
+                return BadRequest();
+            }
 
-            thislist.IsPrviate = !thislist.IsPrviate;
+            if (result.IsPrviate != !thislist.IsPrviate)
+            {
+                return BadRequest();
+            }
 
-            _FavouriteListsServices.Update(thislist);
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View("Details");
+        [HttpPost]
+        public async Task<IActionResult> UserDelete(Guid id)
+        {
+            var deletedList = await _FavouriteListsServices.DetailsAsync(id);
+
+            deletedList.ListDeletedAt = DateTime.UtcNow;
+
+            var dto = new FavouriteListDTO();
+
+            dto.FavouriteListID = deletedList.FavouriteListID;
+            dto.ListBelongsToUser = deletedList.ListBelongsToUser;
+            dto.IsMovieOrActor = deletedList.IsMovieOrActor;
+            dto.ListName = deletedList.ListName;
+            dto.ListDescription = deletedList.ListDescription;
+            dto.IsPrviate = deletedList.IsPrviate;
+            dto.ListOfMovies = deletedList.ListOfMovies;
+            dto.ListCreateAt = deletedList.ListCreateAt;
+            dto.ListModifiedAt = DateTime.UtcNow;
+            dto.ListDeletedAt = deletedList.ListDeletedAt;
+
+            string UpdateServiceType = "Delete";
+
+
+            var result = await _FavouriteListsServices.Update(dto, UpdateServiceType);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         private List<Guid> MovieToId(List<Movie> listOfMovies)

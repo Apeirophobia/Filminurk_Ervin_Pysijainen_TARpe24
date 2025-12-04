@@ -47,10 +47,13 @@
 				{
 					@foreach (var list in Model)
 					{
+						if (list.ListDeletedAt == null)
+						{
 						<table>
 							<tr>
 								<td colspan="2">
 									<a asp-action="UserDetails" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID" asp-route-thisuserid="@list.ListBelongsToUser">@list.ListName</a>
+									@list.ListDeletedAt
 								</td>
 							</tr>
 							<tr>
@@ -65,6 +68,7 @@
 								<td>@list.ListDescription</td>
 							</tr>
 						</table>
+						}
 						rowNumber++;
 					}
 				}
