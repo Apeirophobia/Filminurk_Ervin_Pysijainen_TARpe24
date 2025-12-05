@@ -10,6 +10,7 @@ using Filminurk.Data;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Environment = Filminurk.Data.Environment;
 
 namespace Filminurk.ApplicationServices.Services
 {
@@ -17,21 +18,19 @@ namespace Filminurk.ApplicationServices.Services
     {
         private readonly IConfiguration _configuration;
         private readonly FilminurkTARpe24Context _context;
-        private readonly IEmailsServices _emailsServices;
 
-        public EmailsServices(FilminurkTARpe24Context context, IEmailsServices emailsServices, IConfiguration configuration)
+        public EmailsServices(FilminurkTARpe24Context context, IConfiguration configuration)
         {
             _context = context;
-            _emailsServices = emailsServices;
             _configuration = configuration;
         }
 
         public void SendEmail(EmailDTO dto)
         {
             var email = new MimeMessage();
-            _configuration.GetSection("EmailUserName").Value = "ervinpusijainen";
-            _configuration.GetSection("EmailHost").Value = "smtp.gmail.com";
-            _configuration.GetSection("EmailPassword").Value = "jimd icnu alwr vltb";
+            _configuration.GetSection("EmailUserName").Value = Environment.gmailusername;
+            _configuration.GetSection("EmailHost").Value = Environment.smtpaddress;
+            _configuration.GetSection("EmailPassword").Value = Environment.gmailapppassword;
 
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(dto.SendToThisAddress));
@@ -45,7 +44,7 @@ namespace Filminurk.ApplicationServices.Services
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
 
-            smtp.Connect(_configuration.GetSection("EmailHost").Value = "", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Connect(_configuration.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
             smtp.Authenticate(_configuration.GetSection("EmailUserName").Value, _configuration.GetSection("EmailPassword").Value);
             smtp.Send(email);
             smtp.Disconnect(true);

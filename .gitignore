@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+Filminurk/Environment.cs
+Filminurk/Filminurk.Data/Environment.cs
