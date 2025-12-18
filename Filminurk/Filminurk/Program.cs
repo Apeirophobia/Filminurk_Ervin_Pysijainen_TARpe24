@@ -13,6 +13,7 @@ builder.Services.AddScoped<IFilesServices, FilesServices>();
 builder.Services.AddScoped<IActorServices, ActorServices>();
 builder.Services.AddScoped<IUserCommentsServices, UserCommentsServices>();
 builder.Services.AddScoped<IFavouriteListsServices, FavouriteListsServices>();
+builder.Services.AddScoped<IAccountsServices, AccountsServices>();
 builder.Services.AddScoped<IEmailsServices, EmailsServices>();
 
 var app = builder.Build();
