@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Filminurk.Core.Domain.ApplicationUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,7 +44,33 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Emails" asp-action="Index">Email</a>
                         </li>
                     </ul>
+                    <ul>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="FavouriteLists" asp-action="Index">Lemmikute nimekirjad</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Accounts" asp-action="LogOut">
+                                    <button type="submit" class="nav-link btn btn-link" style="width:auto"; padding:0.8rem;">
+                                        Logi v'lja'
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else 
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Register">Registreeru</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Login">Logi sisse</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
+               
             </div>
         </nav>
     </header>

@@ -49,5 +49,6 @@ namespace Filminurk.ApplicationServices.Services
             smtp.Send(email);
             smtp.Disconnect(true);
         }
+
     }
 }
