@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using Filminurk.Core.Domain;
+using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Accounts;
@@ -19,13 +20,15 @@ namespace Filminurk.Controllers
         public AccountsController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            FilminurkTARpe24Context context)
+            FilminurkTARpe24Context context,
+            IEmailsServices emailsServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-
+            _emailsServices = emailsServices;
         }
+
         [HttpGet]
         public async Task<IActionResult> AddPassword()
         {
@@ -205,6 +208,14 @@ namespace Filminurk.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var dto = new EmailDTO()
+                    {
+                        SendToThisAddress = user.Email,
+                        EmailSubject = "Registration Confirmation",
+                        EmailContent = "Please Confirm Your Email, Dumbass"
+                    };
+                    _emailsServices.SendEmail(dto);
+
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
                     // HOMEWORK TASK: koosta email kasutajalt pärineva aadressile saatmiseks, kasutaja saab oma postkastist kätte emaili

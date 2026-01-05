@@ -1,0 +1,21 @@
+﻿@model Filminurk.Models.AccuWeather.AccuWeatherSearchViewModel
+
+<h1>Otsi linna ilma</h1>
+
+<div class="container"></div>
+	<form method="post">
+		<div class="container">
+			<div class="form-group col-md-offset-3 col-md-5">
+				<h2>Siit saad ilma otsida soovitud linnast:</h2>
+				<label asp-for="CityName" style="font:Arial"></label>
+				<input asp-for="CityName" class="form-control" />
+				<span asp-validation-for="CityName" class="text-danger"></span>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="form-group col-md-offset-3 col-md-5">
+				<button asp-controller="AccuWeather" asp-action="FindWeather" class="btn btn-primary">Otsi</button>
+			</div>
+		</div>
+	</form>

@@ -11,5 +11,6 @@ namespace Filminurk.Core.ServiceInterface
     public interface IAccountsServices
     {
         Task<ApplicationUser> Register(ApplicationUserDTO userDTO);
+        Task<ApplicationUser> Login(LoginDTO userDTO);
     }
 }
