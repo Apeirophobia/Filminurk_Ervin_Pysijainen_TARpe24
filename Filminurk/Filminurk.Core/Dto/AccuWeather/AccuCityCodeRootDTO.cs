@@ -20,7 +20,7 @@ namespace Filminurk.Core.Dto.AccuWeather
         public Country? Country { get; set; }
         public AdministrativeArea? AdministrativeArea { get; set; }
         public TimeZone? TimeZone { get; set; }
-        public Geoposition? Geoposition { get; set; }
+        public GeoPosition? Geoposition { get; set; }
         public bool IsAlias { get; set; }
         public SupplementalAdminArea[]? SupplementalAdminAreas { get; set; }
         public string[]? DataSets { get; set; }
@@ -58,12 +58,12 @@ namespace Filminurk.Core.Dto.AccuWeather
     {
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public int GmtOffset { get; set; }
+        public double GmtOffset { get; set; }
         public bool IsDaylightSaving { get; set; }
         public DateTime NextOffsetChange { get; set; }
     }
 
-    public class Geoposition
+    public class GeoPosition
     {
         public float Latitude { get; set; }
         public float Longitude { get; set; }
@@ -78,21 +78,21 @@ namespace Filminurk.Core.Dto.AccuWeather
 
     public class Metric
     {
-        public int Value { get; set; }
-        public int Unit { get; set; }
+        public double Value { get; set; }
+        public string Unit { get; set; } = string.Empty;
         public int UnitType { get; set; }
 
     }
     public class Imperial
     {
-        public int Value { get; set; }
-        public int Unit { get; set; }
+        public double Value { get; set; }
+        public string Unit { get; set; } = string.Empty;
         public int UnitType { get; set; }
     }
 
     public class SupplementalAdminArea
     {
-        public int Level { get; set; }
+        public string Level { get; set; }
         public string LocalizedName { get; set; } = string.Empty;
         public string EnglishName { get; set; } = string.Empty;
     }

@@ -1,0 +1,54 @@
+﻿@model Filminurk.Models.AccuWeather.AccuWeatherViewModel
+
+<div class="container">
+	<h2>Ilmaennustus @Model.CityName jaoks</h2>
+	<hr />
+	<dl class="row text-dark">
+		
+		<div>
+			<dt class="col-sm-2">
+				Temperatuuri alampiir (@Html.DisplayFor(Model => Model.TempMinUnit)
+			</dt>
+			<dd>
+				@Html.DisplayFor(Model => Model.TempMinValue)
+			</dd>
+		</div>
+		
+		<div>
+			<dt class="col-sm-2">
+				Temperatuuri ülempiir (@Html.DisplayFor(Model => Model.TempMaxUnit)
+			</dt>
+			<dd>
+				@Html.DisplayFor(Model => Model.TempMaxValue)
+			</dd>
+		</div>
+
+		<div>
+			<dt class="col-sm-2">
+				Tõhusus
+			</dt>
+			<dd>
+				@Html.DisplayFor(Model => Model.Severity)
+			</dd>
+		</div>
+		
+		<div>
+			<dt class="col-sm-2">
+				Kategooria
+			</dt>
+			<dd>
+				@Html.DisplayFor(Model => Model.Category)
+			</dd>
+		</div>
+		
+		<div>
+			<dt class="col-sm-2">
+				Ilmateade
+			</dt>
+			<dd>
+				@Html.DisplayFor(Model => Model.Text)
+			</dd>
+		</div>
+
+	</dl>
+</div>

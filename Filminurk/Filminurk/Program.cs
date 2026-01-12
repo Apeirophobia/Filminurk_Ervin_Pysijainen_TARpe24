@@ -17,6 +17,7 @@ builder.Services.AddScoped<IUserCommentsServices, UserCommentsServices>();
 builder.Services.AddScoped<IFavouriteListsServices, FavouriteListsServices>();
 builder.Services.AddScoped<IAccountsServices, AccountsServices>();
 builder.Services.AddScoped<IEmailsServices, EmailsServices>();
+builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
