@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Reflection.Metadata.Ecma335;
 using Filminurk.Core.Domain;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
@@ -181,7 +182,7 @@ namespace Filminurk.Controllers
         {
             return View();
         }
-        [HttpGet]
+        [HttpGet] 
         public IActionResult AccountCreated()
         {
             return View();
@@ -208,19 +209,23 @@ namespace Filminurk.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
+
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
+
                     var dto = new EmailDTO()
                     {
                         SendToThisAddress = user.Email,
                         EmailSubject = "Registration Confirmation",
-                        EmailContent = "Please Confirm Your Email, Dumbass"
+                        EmailContent = $"Vasta mulle palun. \n{confirmationLink}"
                     };
                     _emailsServices.SendEmail(dto);
 
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
                     // HOMEWORK TASK: koosta email kasutajalt pärineva aadressile saatmiseks, kasutaja saab oma postkastist kätte emaili
                     // kinnituslingiga, mille jaoks kasutatakse tokenit, siin tuleb välja kutsuda vastav, uus emaili saatmise meetod, mis saadab
                     // õige sisuga kirja
+
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -250,6 +255,13 @@ namespace Filminurk.Controllers
             return BadRequest();
         }
 
+        [HttpPost]
+        [ActionName("ConfirmEmail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmailPost(string userId, string token)
+        {
+            return RedirectToAction("LoginPost");
+        }
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string? returnURL)
@@ -258,10 +270,11 @@ namespace Filminurk.Controllers
             {
                 ReturnUrl = returnURL
             };
-            return View(vm  );
+            return View(vm); 
         }
 
         [HttpPost]
+        [ActionName("LoginPost")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnURL)
         {
