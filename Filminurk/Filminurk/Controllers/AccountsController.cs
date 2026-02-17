@@ -313,7 +313,7 @@ namespace Filminurk.Controllers
                 ModelState.AddModelError("", "Sisselogimine ebaõnnestus, kontakteeru administraatoriga");
 
             }
-            return View(model);
+            return View("Login", model);
         }
         [HttpPost]
         public async Task<IActionResult> Logout()
