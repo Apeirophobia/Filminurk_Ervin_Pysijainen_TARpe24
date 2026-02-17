@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +20,10 @@
     <ProjectReference Include="..\Filminurk.ApplicationServices\Filminurk.ApplicationServices.csproj" />
     <ProjectReference Include="..\Filminurk.Core\Filminurk.Core.csproj" />
     <ProjectReference Include="..\Filminurk.Data\Filminurk.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\ChatRoom\" />
   </ItemGroup>
 
 </Project>
