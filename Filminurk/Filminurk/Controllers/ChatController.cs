@@ -18,6 +18,5 @@ namespace Filminurk.Controllers
             return View();
         }
 
-        
     }
 }
