@@ -49,6 +49,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="OMDB" asp-action="Index">OMDB</a>
                         </li>
+                         @if (signInManager.IsSignedIn(User))
+                            {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
+                            </li>
+                            }
+
                     </ul>
                     <ul>
                         @if (signInManager.IsSignedIn(User))
