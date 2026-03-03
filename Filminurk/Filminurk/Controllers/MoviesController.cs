@@ -44,7 +44,7 @@ namespace Filminurk.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MoviesCreateUpdateViewModel vm)
+        public async Task<IActionResult> CreatePost(MoviesCreateUpdateViewModel vm)
         {
             if (ModelState.IsValid == true)
             {
