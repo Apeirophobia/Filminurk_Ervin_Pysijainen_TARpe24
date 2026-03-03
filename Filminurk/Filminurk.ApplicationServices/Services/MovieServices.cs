@@ -42,8 +42,19 @@ namespace Filminurk.ApplicationServices.Services
             _filesServices.FilesToApi(dto, movie);
 
 
-            await _context.Movies.AddAsync(movie);
-            await _context.SaveChangesAsync();
+            var result = await _context.Movies.AddAsync(movie);
+            if (result == null)
+            {
+                return null;
+            }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+            }
 
             return movie;
         }
