@@ -16,5 +16,6 @@ namespace Filminurk.Core.Dto.OMDB
         public string? Runtime { get; set; }
         public string? Genre { get; set; }
         public string? Director { get; set; }
+        public string? imdbID { get; set; }
     }
 }
