@@ -1,0 +1,103 @@
+﻿@model Filminurk.Models.OMDB.OMDBViewModel
+
+<div class="container">
+	<h2>Ilmaennustus @Model.Title jaoks</h2>
+	<hr />
+
+	<form asp-action="AddTheMovie" method="post">
+		<input type="hidden" asp-for="Title" />
+		<input type="hidden" asp-for="Year" />
+		<input type="hidden" asp-for="imdbID" />
+		<input type="hidden" asp-for="Rated" />
+		<input type="hidden" asp-for="Released" />
+		<input type="hidden" asp-for="Runtime" />
+		<input type="hidden" asp-for="Genre" />
+		<input type="hidden" asp-for="Director" />
+
+		<dl class="row text-dark">
+
+			<div>
+				<dt class="col-sm-2">
+					Title
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Title)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Year
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Year)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					imdbID
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.imdbID)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Rated
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Rated)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Released
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Released)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Runtime
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Runtime)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Genre
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Genre)
+				</dd>
+			</div>
+
+			<div>
+				<dt class="col-sm-2">
+					Director
+				</dt>
+				<dd>
+					@Html.DisplayFor(Model => Model.Director)
+				</dd>
+			</div>
+
+		</dl>
+
+		<div>
+
+			<input type="submit" asp-action="AddTheMovie" asp-controller="OMDB" method="post" value="lisa film"/>
+
+		</div>
+
+	</form>
+	
+	
+	
+</div>
